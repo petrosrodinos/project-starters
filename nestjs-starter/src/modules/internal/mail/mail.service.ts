@@ -1,4 +1,4 @@
-import { SendgridMailService } from '@/integrations/notifications/sendgrid/services/mail.service';
+import { ResendMailService } from '@/integrations/notifications/resend/services/mail.service';
 import { Injectable } from '@nestjs/common';
 import { CreateMailDto } from './dto/create-mail.dto';
 
@@ -6,7 +6,7 @@ import { CreateMailDto } from './dto/create-mail.dto';
 export class MailService {
 
   constructor(
-    private readonly mailService: SendgridMailService
+    private readonly mailService: ResendMailService
   ) { }
 
   create(createMailDto: CreateMailDto) {

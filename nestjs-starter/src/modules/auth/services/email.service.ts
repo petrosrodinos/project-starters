@@ -6,7 +6,7 @@ import * as bcrypt from 'bcrypt';
 import { CreateJwtService } from '@/shared/utils/jwt/jwt.service';
 import { AuthRoles } from '../interfaces/auth.interface';
 import { WaitlistDto } from '../dto/waitlist.dto';
-import { SendgridMailService } from '@/integrations/notifications/sendgrid/services/mail.service';
+import { ResendMailService } from '@/integrations/notifications/resend/services/mail.service';
 import { EmailConfig } from '@/shared/constants/email';
 
 @Injectable()
@@ -14,7 +14,7 @@ export class EmailAuthService {
     constructor(
         private readonly prisma: PrismaService,
         private readonly jwtService: CreateJwtService,
-        private readonly mailService: SendgridMailService,
+        private readonly mailService: ResendMailService,
     ) { }
 
     async registerWithEmail(dto: RegisterEmailDto) {

@@ -13,28 +13,9 @@ export interface CreateEmail {
     dynamic_template_data?: Record<string, any>;
 }
 
-export interface CreateContact {
-    email: string;
-    first_name?: string;
-    last_name?: string;
-    external_id?: string;
-    list_id?: string;
-}
-
-export interface AddRecipientsToList {
-    list_id: string;
-    recipients_ids: string[];
-}
-
 export interface EmailFromAddress {
     verification: string;
     confirmation: string;
-}
-
-export interface GetListRecipients {
-    list_id: string;
-    page?: number;
-    page_size?: number;
 }
 
 export const EmailTemplates = {
@@ -48,8 +29,7 @@ export const EmailTemplates = {
     CHAT_INTERNAL_MESSAGE: 'chat-internal-message',
     CHAT_CLIENT_MESSAGE_CONFIRMATION: 'chat-client-message-confirmation',
     CAMPAIGN_MESSAGE: 'campaign-message',
+    WAITLIST: 'waitlist',
 } as const;
 
 export type EmailTemplate = (typeof EmailTemplates)[keyof typeof EmailTemplates];
-
-

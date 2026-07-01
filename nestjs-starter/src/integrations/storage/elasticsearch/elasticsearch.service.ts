@@ -2,25 +2,20 @@ import {
     Inject,
     Injectable,
     Logger,
-    OnModuleInit,
 } from '@nestjs/common';
 import { Client } from '@elastic/elasticsearch';
-import { Contact, ContactTag, Lead } from '@/generated/prisma';
 import { AiService } from '@/integrations/ai/services/ai.service';
+import { ELASTICSEARCH_CLIENT } from './elasticsearch.constants';
 import {
-    CONTACTS_INDEX,
-    CONTACTS_MAPPING,
-    ELASTICSEARCH_CLIENT,
-    LEADS_INDEX,
-    LEADS_MAPPING,
-} from './elasticsearch.constants';
-import {
+    IndexDocumentOptions,
+    IndexMappings,
+    SearchFilter,
     SearchQuery,
     SearchResult,
 } from './interfaces/elasticsearch.interfaces';
 
 @Injectable()
-export class ElasticsearchService implements OnModuleInit {
+export class ElasticsearchService {
     private readonly logger = new Logger(ElasticsearchService.name);
 
     constructor(
@@ -32,143 +27,79 @@ export class ElasticsearchService implements OnModuleInit {
         return this.client !== null;
     }
 
-    async onModuleInit(): Promise<void> {
+    async registerIndex(index: string, mappings: IndexMappings): Promise<void> {
         if (!this.client) return;
         try {
-            await this.ensureIndex(LEADS_INDEX, LEADS_MAPPING);
-            await this.ensureIndex(CONTACTS_INDEX, CONTACTS_MAPPING);
+            const exists = await this.client.indices.exists({ index });
+            if (exists) return;
+            await this.client.indices.create({ index, mappings });
+            this.logger.log(`Created Elasticsearch index: ${index}`);
         } catch (error) {
             this.logger.warn(
-                `Elasticsearch unreachable at startup: ${this.errMsg(error)} — search features disabled`,
+                `Failed to create index "${index}": ${this.errMsg(error)}`,
             );
         }
     }
 
-    private async ensureIndex(
+    async index(
         index: string,
-        mappings: { properties: Record<string, any> },
-    ): Promise<void> {
-        if (!this.client) return;
-        const exists = await this.client.indices.exists({ index });
-        if (exists) return;
-        await this.client.indices.create({ index, mappings });
-        this.logger.log(`Created Elasticsearch index: ${index}`);
-    }
-
-    async indexLead(lead: Lead): Promise<void> {
-        if (!this.client) return;
-        try {
-            const metadata = this.buildLeadMetadata(lead);
-            const embedding = await this.embed(metadata);
-            await this.client.index({
-                index: LEADS_INDEX,
-                id: lead.uuid,
-                document: {
-                    uuid: lead.uuid,
-                    name: lead.name,
-                    email: lead.email,
-                    company: lead.company,
-                    title: lead.title,
-                    industry: lead.industry,
-                    location: lead.location,
-                    description: lead.description,
-                    source_type: lead.source_type,
-                    linkedin_url: lead.linkedin_url,
-                    metadata,
-                    embedding,
-                    created_at: lead.created_at,
-                },
-            });
-        } catch (error) {
-            this.logger.warn(`indexLead(${lead.uuid}) failed: ${this.errMsg(error)}`);
-        }
-    }
-
-    async indexContact(
-        contact: Contact & { lead: Lead; tags: ContactTag[] },
+        id: string,
+        document: Record<string, unknown>,
+        options?: IndexDocumentOptions,
     ): Promise<void> {
         if (!this.client) return;
         try {
-            const tags = contact.tags.map((t) => t.tag);
-            const metadata = this.buildContactMetadata(contact, tags);
-            const embedding = await this.embed(metadata);
-            await this.client.index({
-                index: CONTACTS_INDEX,
-                id: contact.uuid,
-                document: {
-                    uuid: contact.uuid,
-                    user_uuid: contact.user_uuid,
-                    lead_uuid: contact.lead_uuid,
-                    status: contact.status,
-                    score: contact.score,
-                    tags,
-                    name: contact.lead.name,
-                    email: contact.lead.email,
-                    company: contact.lead.company,
-                    title: contact.lead.title,
-                    industry: contact.lead.industry,
-                    location: contact.lead.location,
-                    description: contact.lead.description,
-                    metadata,
-                    embedding,
-                    created_at: contact.created_at,
-                },
-            });
+            const embeddingField = options?.embeddingField ?? 'embedding';
+            const payload = { ...document };
+
+            if (options?.embeddingSource !== undefined) {
+                payload[embeddingField] = await this.embed(options.embeddingSource);
+            }
+
+            await this.client.index({ index, id, document: payload });
         } catch (error) {
-            this.logger.warn(
-                `indexContact(${contact.uuid}) failed: ${this.errMsg(error)}`,
-            );
+            this.logger.warn(`index(${index}, ${id}) failed: ${this.errMsg(error)}`);
         }
     }
 
-    async deleteLead(uuid: string): Promise<void> {
+    async delete(index: string, id: string): Promise<void> {
         if (!this.client) return;
         try {
-            await this.client.delete({ index: LEADS_INDEX, id: uuid });
+            await this.client.delete({ index, id });
         } catch (error: any) {
             if (error?.meta?.statusCode === 404) return;
-            this.logger.warn(`deleteLead(${uuid}) failed: ${this.errMsg(error)}`);
+            this.logger.warn(`delete(${index}, ${id}) failed: ${this.errMsg(error)}`);
         }
     }
 
-    async deleteContact(uuid: string): Promise<void> {
-        if (!this.client) return;
-        try {
-            await this.client.delete({ index: CONTACTS_INDEX, id: uuid });
-        } catch (error: any) {
-            if (error?.meta?.statusCode === 404) return;
-            this.logger.warn(`deleteContact(${uuid}) failed: ${this.errMsg(error)}`);
-        }
-    }
-
-    async searchLeads(query: SearchQuery): Promise<SearchResult> {
-        if (!this.client) return { hits: [], total: 0 };
-
-        const filter: any[] = [];
-        if (query.source_type) filter.push({ term: { source_type: query.source_type } });
-
-        return this.runSearch(LEADS_INDEX, query, filter);
-    }
-
-    async searchContacts(
-        userUuid: string,
-        query: SearchQuery,
-    ): Promise<SearchResult> {
-        if (!this.client) return { hits: [], total: 0 };
-
-        const filter: any[] = [{ term: { user_uuid: userUuid } }];
-        if (query.status) filter.push({ term: { status: query.status } });
-        if (query.min_score != null) filter.push({ range: { score: { gte: query.min_score } } });
-        if (query.tags && query.tags.length > 0) filter.push({ terms: { tags: query.tags } });
-
-        return this.runSearch(CONTACTS_INDEX, query, filter);
-    }
-
-    private async runSearch(
+    async search<T = Record<string, unknown>>(
         index: string,
         query: SearchQuery,
-        filter: any[],
-    ): Promise<SearchResult> {
+    ): Promise<SearchResult<T>> {
+        if (!this.client) return { hits: [], total: 0 };
+
+        const filter = this.buildFilters(query.filters ?? []);
+        return this.runSearch<T>(index, query, filter);
+    }
+
+    private buildFilters(filters: SearchFilter[]): Record<string, unknown>[] {
+        return filters.map((f) => {
+            if ('term' in f) {
+                return { term: { [f.term.field]: f.term.value } };
+            }
+            if ('terms' in f) {
+                return { terms: { [f.terms.field]: f.terms.values } };
+            }
+            const { field, ...range } = f.range;
+            return { range: { [field]: range } };
+        });
+    }
+
+    private async runSearch<T>(
+        index: string,
+        query: SearchQuery,
+        filter: Record<string, unknown>[],
+    ): Promise<SearchResult<T>> {
         if (!this.client) return { hits: [], total: 0 };
 
         const limit = query.limit ?? 20;
@@ -190,7 +121,7 @@ export class ElasticsearchService implements OnModuleInit {
                     filter,
                 },
             });
-            return this.formatResponse(response);
+            return this.formatResponse<T>(response);
         }
 
         const response = await this.client.search({
@@ -200,47 +131,14 @@ export class ElasticsearchService implements OnModuleInit {
             _source_excludes: ['embedding'],
             query: { bool: { must: [{ match_all: {} }], filter } },
         });
-        return this.formatResponse(response);
-    }
-
-    private buildLeadMetadata(lead: Lead): string {
-        const enrichmentSummary =
-            lead.enrichment_data && typeof lead.enrichment_data === 'object' && 'summary' in lead.enrichment_data
-                ? String((lead.enrichment_data as { summary?: unknown }).summary ?? '')
-                : '';
-        return [
-            lead.name && `Name: ${lead.name}`,
-            lead.title && `Title: ${lead.title}`,
-            lead.company && `Company: ${lead.company}`,
-            lead.industry && `Industry: ${lead.industry}`,
-            lead.location && `Location: ${lead.location}`,
-            lead.website && `Website: ${lead.website}`,
-            lead.description && `Description: ${lead.description}`,
-            enrichmentSummary && `Summary: ${enrichmentSummary}`,
-        ]
-            .filter(Boolean)
-            .join('\n');
-    }
-
-    private buildContactMetadata(
-        contact: Contact & { lead: Lead },
-        tags: string[],
-    ): string {
-        const parts = [
-            contact.status && `Status: ${contact.status}`,
-            contact.score != null && `Score: ${contact.score}`,
-            tags.length > 0 && `Tags: ${tags.join(', ')}`,
-            contact.notes && `Notes: ${contact.notes}`,
-            this.buildLeadMetadata(contact.lead),
-        ];
-        return parts.filter(Boolean).join('\n');
+        return this.formatResponse<T>(response);
     }
 
     private async embed(text: string): Promise<number[]> {
         return this.aiService.embedText(text.trim() || ' ');
     }
 
-    private formatResponse(response: any): SearchResult {
+    private formatResponse<T>(response: any): SearchResult<T> {
         const hits = response.hits?.hits ?? [];
         const total =
             typeof response.hits?.total === 'number'

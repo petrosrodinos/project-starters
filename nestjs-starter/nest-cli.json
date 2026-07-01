@@ -6,7 +6,7 @@
     "deleteOutDir": true,
     "assets": [
       {
-        "include": "integrations/notifications/sendgrid/templates/**/*",
+        "include": "integrations/notifications/resend/templates/**/*",
         "outDir": "dist/src"
       },
       {

@@ -7,7 +7,7 @@ import { EmailTemplate } from '../interfaces/mail.interfaces';
 @Injectable()
 export class TemplateService {
     private readonly logger = new Logger(TemplateService.name);
-    private readonly templatesPath = path.join(process.cwd(), 'dist', 'integrations', 'notifications', 'sendgrid', 'templates');
+    private readonly templatesPath = path.join(process.cwd(), 'dist', 'integrations', 'notifications', 'resend', 'templates');
     private compiledTemplates = new Map<string, HandlebarsTemplateDelegate>();
 
     constructor() {
@@ -67,6 +67,4 @@ export class TemplateService {
             throw new Error(`Failed to render template ${templateName}`);
         }
     }
-
-
 }

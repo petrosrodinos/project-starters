@@ -13,12 +13,28 @@ export class GcsConfig {
         this.initGcs();
     }
 
+    private parseCredentials(
+        credentialsJsonBase64?: string,
+        credentialsJson?: string,
+    ): object | undefined {
+        if (credentialsJsonBase64) {
+            const decoded = Buffer.from(credentialsJsonBase64, 'base64').toString('utf-8');
+            return JSON.parse(decoded);
+        }
+
+        if (credentialsJson) {
+            return JSON.parse(credentialsJson);
+        }
+
+        return undefined;
+    }
+
     private initGcs() {
         try {
             const projectId = this.configService.get('GCS_PROJECT_ID');
             const bucketName = this.configService.get('GCS_BUCKET_NAME');
-            const credentialsPath = this.configService.get('GCS_CREDENTIALS_PATH');
-            const credentials = this.configService.get('GCS_CREDENTIALS');
+            const credentialsJsonBase64 = this.configService.get('GCS_CREDENTIALS_JSON_BASE64');
+            const credentialsJson = this.configService.get('GCS_CREDENTIALS');
             const folderName = this.configService.get('GCS_FOLDER_NAME');
 
             if (!projectId || !bucketName) {
@@ -26,21 +42,20 @@ export class GcsConfig {
                 return;
             }
 
+            const credentials = this.parseCredentials(credentialsJsonBase64, credentialsJson);
+
             this.config = {
                 project_id: projectId,
                 bucket_name: bucketName,
-                credentials_path: credentialsPath,
-                credentials: credentials ? JSON.parse(credentials) : undefined,
-                folder_name: folderName || 'documents'
+                credentials,
+                folder_name: folderName || 'documents',
             };
 
-            const storageOptions: any = {
-                projectId: this.config.project_id
+            const storageOptions: { projectId: string; credentials?: object } = {
+                projectId: this.config.project_id,
             };
 
-            if (this.config.credentials_path) {
-                storageOptions.keyFilename = this.config.credentials_path;
-            } else if (this.config.credentials) {
+            if (this.config.credentials) {
                 storageOptions.credentials = this.config.credentials;
             }
 

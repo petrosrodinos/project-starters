@@ -10,5 +10,9 @@ export const EmailConfig = {
             subject: 'Sentify - Waitlist',
             template_id: EmailTemplates.WAITLIST,
         },
+        password_reset: {
+            subject: 'Reset your password',
+            template_id: EmailTemplates.PASSWORD_RESET,
+        },
     }
 }

@@ -131,6 +131,28 @@ exports.Prisma.UserScalarFieldEnum = {
   updated_at: 'updated_at'
 };
 
+exports.Prisma.PasswordResetTokenScalarFieldEnum = {
+  id: 'id',
+  token_hash: 'token_hash',
+  user_uuid: 'user_uuid',
+  expires_at: 'expires_at',
+  used_at: 'used_at',
+  created_at: 'created_at'
+};
+
+exports.Prisma.DocumentScalarFieldEnum = {
+  id: 'id',
+  uuid: 'uuid',
+  user_uuid: 'user_uuid',
+  filename: 'filename',
+  mimetype: 'mimetype',
+  size: 'size',
+  url: 'url',
+  path: 'path',
+  type: 'type',
+  created_at: 'created_at'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -152,8 +174,21 @@ exports.AuthRole = exports.$Enums.AuthRole = {
   SUPPORT: 'SUPPORT'
 };
 
+exports.DocumentType = exports.$Enums.DocumentType = {
+  LOGO: 'LOGO',
+  BANNER: 'BANNER',
+  IMAGE: 'IMAGE',
+  VIDEO: 'VIDEO',
+  AUDIO: 'AUDIO',
+  PDF: 'PDF',
+  DOCUMENT: 'DOCUMENT',
+  OTHER: 'OTHER'
+};
+
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  PasswordResetToken: 'PasswordResetToken',
+  Document: 'Document'
 };
 
 /**

@@ -30,6 +30,7 @@ export const EmailTemplates = {
     CHAT_CLIENT_MESSAGE_CONFIRMATION: 'chat-client-message-confirmation',
     CAMPAIGN_MESSAGE: 'campaign-message',
     WAITLIST: 'waitlist',
+    PASSWORD_RESET: 'password-reset',
 } as const;
 
 export type EmailTemplate = (typeof EmailTemplates)[keyof typeof EmailTemplates];

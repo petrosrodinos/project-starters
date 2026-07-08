@@ -57,23 +57,25 @@ export const adminLoginToAccount = async (account_uuid: string): Promise<LoggedI
     }
 };
 
-// export const forgotPassword = async (email: string) => {
-//     try {
+export const forgotPassword = async (email: string): Promise<void> => {
+    try {
+        await axiosInstance.post(ApiRoutes.auth.email.forgot_password, { email });
+    } catch (error: any) {
+        throw new Error(
+            error?.response?.data?.message || "Failed to send reset email. Please try again.",
+        );
+    }
+};
 
-//     } catch (error) {
-//         console.error("Error sending reset password email:", error);
-//         throw error;
-//     }
-// };
-
-// export const resetPassword = async (password: string) => {
-//     try {
-
-//     } catch (error) {
-//         console.error("Error resetting password:", error);
-//         throw error;
-//     }
-// };
+export const resetPassword = async (token: string, password: string): Promise<void> => {
+    try {
+        await axiosInstance.post(ApiRoutes.auth.email.reset_password, { token, password });
+    } catch (error: any) {
+        throw new Error(
+            error?.response?.data?.message || "Failed to reset password. Please try again.",
+        );
+    }
+};
 
 // export const updatePassword = async (
 //     email: string,

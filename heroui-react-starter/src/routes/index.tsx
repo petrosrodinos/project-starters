@@ -3,6 +3,8 @@ import { Routes } from "@/routes/routes";
 import ProtectedRoute from "@/routes/protected-route";
 import SignIn from "@/pages/auth/pages/sign-in";
 import SignUp from "@/pages/auth/pages/sign-up";
+import ForgotPassword from "@/pages/auth/pages/forgot-password";
+import ResetPassword from "@/pages/auth/pages/reset-password";
 import AuthLayout from "@/pages/auth/layout";
 import DashboardLayout from "@/pages/dashboard/layout";
 import DashboardHome from "@/pages/dashboard";
@@ -10,7 +12,6 @@ import DashboardHome from "@/pages/dashboard";
 export default function AppRoutes() {
   return (
     <ReactRoutes>
-      {/* Auth routes */}
       <Route
         path="/auth"
         element={
@@ -21,6 +22,8 @@ export default function AppRoutes() {
       >
         <Route path="sign-up" element={<SignUp />} />
         <Route path="sign-in" element={<SignIn />} />
+        <Route path="forgot-password" element={<ForgotPassword />} />
+        <Route path="reset-password" element={<ResetPassword />} />
         <Route index element={<Navigate to={Routes.auth.sign_in} replace />} />
       </Route>
 

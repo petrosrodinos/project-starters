@@ -1,4 +1,4 @@
-import { adminLoginToAccount, refreshAccountToken, signIn, signUp } from "../services/auth";
+import { adminLoginToAccount, forgotPassword, refreshAccountToken, resetPassword, signIn, signUp } from "../services/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useAuthStore } from "@/stores/auth";
 import { useNavigate } from "react-router-dom";
@@ -98,6 +98,54 @@ export function useAdminLoginToAccount() {
             toast({
                 title: "Could not admin login to account",
                 description: error.message,
+                duration: 3000,
+                variant: "error",
+            });
+        },
+    });
+}
+
+export function useForgotPassword() {
+    const navigate = useNavigate();
+
+    return useMutation({
+        mutationFn: (email: string) => forgotPassword(email),
+        onSuccess: () => {
+            toast({
+                title: "Check your email",
+                description: "If an account exists, a reset link has been sent.",
+                duration: 4000,
+            });
+            navigate(Routes.auth.sign_in);
+        },
+        onError: (error: any) => {
+            toast({
+                title: "Could not send reset email",
+                description: error?.message || "An unexpected error occurred",
+                duration: 3000,
+                variant: "error",
+            });
+        },
+    });
+}
+
+export function useResetPassword(token: string) {
+    const navigate = useNavigate();
+
+    return useMutation({
+        mutationFn: (password: string) => resetPassword(token, password),
+        onSuccess: () => {
+            toast({
+                title: "Password reset",
+                description: "Your password has been updated. You can sign in now.",
+                duration: 3000,
+            });
+            navigate(Routes.auth.sign_in);
+        },
+        onError: (error: any) => {
+            toast({
+                title: "Could not reset password",
+                description: error?.message || "An unexpected error occurred",
                 duration: 3000,
                 variant: "error",
             });

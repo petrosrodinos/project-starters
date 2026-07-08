@@ -16,6 +16,15 @@ const Login: FC = () => {
 
       <SignInForm />
 
+      <div className="text-center text-sm mt-3">
+        <Link
+          to={Routes.auth.forgot_password}
+          className="text-muted underline underline-offset-4 hover:opacity-80"
+        >
+          Forgot password?
+        </Link>
+      </div>
+
       <div className="text-center text-sm mt-4 text-muted">
         Don&apos;t have an account?{" "}
         <Link to={Routes.auth.sign_up} className="underline underline-offset-4 hover:opacity-80">

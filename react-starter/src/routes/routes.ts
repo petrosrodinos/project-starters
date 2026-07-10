@@ -4,6 +4,7 @@ export const Routes = {
         sign_up: "/auth/sign-up",
     },
     admin: {
+        health: "/admin/health",
         users: "/admin/users",
         alerts: "/admin/alerts",
     },

@@ -7,6 +7,7 @@ import { AiModule } from './modules/internal/ai/ai.module';
 import { RedisModule } from './core/databases/redis/redis.module';
 import { RedisCacheModule } from './modules/internal/redis-cache/redis-cache.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { HealthModule } from './modules/health/health.module';
 import { ConfigModule } from './shared/config/env/env.module';
 
 @Module({
@@ -19,6 +20,7 @@ import { ConfigModule } from './shared/config/env/env.module';
     RedisCacheModule,
     // GraphQLModule,
     AuthModule,
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

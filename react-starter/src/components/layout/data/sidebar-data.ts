@@ -7,6 +7,7 @@ import {
   IconUserCog,
   IconAlertTriangle,
   IconUser,
+  IconHeartbeat,
 } from "@tabler/icons-react";
 import { Command, CreditCard } from "lucide-react";
 import { type SidebarData } from "../types";
@@ -27,6 +28,11 @@ export const sidebarData: SidebarData = {
       access: [RoleTypes.ADMIN],
       title: "Admin",
       items: [
+        {
+          title: "Health",
+          url: Routes.admin.health,
+          icon: IconHeartbeat,
+        },
         {
           title: "Users",
           url: Routes.admin.users,

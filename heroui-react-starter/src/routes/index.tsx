@@ -8,6 +8,9 @@ import ResetPassword from "@/pages/auth/pages/reset-password";
 import AuthLayout from "@/pages/auth/layout";
 import DashboardLayout from "@/pages/dashboard/layout";
 import DashboardHome from "@/pages/dashboard";
+import AdminLayout from "@/pages/admin/layout";
+import AdminHealthPage from "@/pages/admin/pages/health";
+import { RoleTypes } from "@/features/user/interfaces/user.interface";
 
 export default function AppRoutes() {
   return (
@@ -37,6 +40,18 @@ export default function AppRoutes() {
         }
       >
         <Route index element={<DashboardHome />} />
+      </Route>
+
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute loggedIn={true} requiredRoles={[RoleTypes.ADMIN, RoleTypes.SUPER_ADMIN]}>
+            <AdminLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route path="health" element={<AdminHealthPage />} />
+        <Route index element={<Navigate to={Routes.admin.health} replace />} />
       </Route>
 
       {/* Default redirect */}

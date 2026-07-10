@@ -8,4 +8,7 @@ export const Routes = {
     dashboard: {
         root: "/dashboard",
     },
+    admin: {
+        health: "/admin/health",
+    },
 };

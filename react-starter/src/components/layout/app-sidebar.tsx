@@ -10,10 +10,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { role } = useAuthStore();
   
   const navGroups = sidebarData.navGroups.filter((group) => {
-    if (role && (group.access?.includes(role as RoleType) || role === RoleTypes.SUPER_ADMIN)) {
+    if (!group.access) {
       return true;
     }
-    return false;
+
+    if (!role) {
+      return false;
+    }
+
+    return group.access.includes(role as RoleType) || role === RoleTypes.SUPER_ADMIN;
   });
 
   return (

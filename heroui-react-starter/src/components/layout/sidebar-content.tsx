@@ -1,15 +1,21 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard } from 'lucide-react';
+import { Activity, LayoutDashboard } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/routes/routes';
+import { RoleTypes } from '@/features/user/interfaces/user.interface';
+import { useAuthStore } from '@/stores/auth';
 
 interface SidebarContentProps {
   collapsed: boolean;
   onNavigate?: () => void;
 }
 
-const navItems = [
+const dashboardNavItems = [
   { label: 'Dashboard', icon: LayoutDashboard, href: Routes.dashboard.root, end: true },
+];
+
+const adminNavItems = [
+  { label: 'Health', icon: Activity, href: Routes.admin.health, end: true },
 ];
 
 function NavItem({
@@ -75,19 +81,48 @@ function NavItem({
 }
 
 export default function SidebarContent({ collapsed, onNavigate }: SidebarContentProps) {
+  const { role } = useAuthStore();
+  const canAccessAdmin =
+    role === RoleTypes.ADMIN || role === RoleTypes.SUPER_ADMIN;
+
   return (
-    <ul className="space-y-0.5">
-      {navItems.map(({ label, icon, href, end }) => (
-        <NavItem
-          key={href}
-          label={label}
-          icon={icon}
-          href={href}
-          end={end}
-          collapsed={collapsed}
-          onNavigate={onNavigate}
-        />
-      ))}
-    </ul>
+    <div className="space-y-4">
+      <ul className="space-y-0.5">
+        {dashboardNavItems.map(({ label, icon, href, end }) => (
+          <NavItem
+            key={href}
+            label={label}
+            icon={icon}
+            href={href}
+            end={end}
+            collapsed={collapsed}
+            onNavigate={onNavigate}
+          />
+        ))}
+      </ul>
+
+      {canAccessAdmin ? (
+        <div>
+          {!collapsed ? (
+            <p className="px-2.5 pb-1 text-[11px] font-semibold uppercase tracking-wide text-muted">
+              Admin
+            </p>
+          ) : null}
+          <ul className="space-y-0.5">
+            {adminNavItems.map(({ label, icon, href, end }) => (
+              <NavItem
+                key={href}
+                label={label}
+                icon={icon}
+                href={href}
+                end={end}
+                collapsed={collapsed}
+                onNavigate={onNavigate}
+              />
+            ))}
+          </ul>
+        </div>
+      ) : null}
+    </div>
   );
 }

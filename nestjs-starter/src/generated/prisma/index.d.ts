@@ -1117,23 +1117,12 @@ export namespace Prisma {
 
   export type AggregateUser = {
     _count: UserCountAggregateOutputType | null
-    _avg: UserAvgAggregateOutputType | null
-    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
   }
 
-  export type UserAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type UserSumAggregateOutputType = {
-    id: number | null
-  }
-
   export type UserMinAggregateOutputType = {
-    id: number | null
-    uuid: string | null
+    id: string | null
     email: string | null
     phone: string | null
     password: string | null
@@ -1143,8 +1132,7 @@ export namespace Prisma {
   }
 
   export type UserMaxAggregateOutputType = {
-    id: number | null
-    uuid: string | null
+    id: string | null
     email: string | null
     phone: string | null
     password: string | null
@@ -1155,7 +1143,6 @@ export namespace Prisma {
 
   export type UserCountAggregateOutputType = {
     id: number
-    uuid: number
     email: number
     phone: number
     password: number
@@ -1166,17 +1153,8 @@ export namespace Prisma {
   }
 
 
-  export type UserAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type UserSumAggregateInputType = {
-    id?: true
-  }
-
   export type UserMinAggregateInputType = {
     id?: true
-    uuid?: true
     email?: true
     phone?: true
     password?: true
@@ -1187,7 +1165,6 @@ export namespace Prisma {
 
   export type UserMaxAggregateInputType = {
     id?: true
-    uuid?: true
     email?: true
     phone?: true
     password?: true
@@ -1198,7 +1175,6 @@ export namespace Prisma {
 
   export type UserCountAggregateInputType = {
     id?: true
-    uuid?: true
     email?: true
     phone?: true
     password?: true
@@ -1246,18 +1222,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: UserAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: UserSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: UserMinAggregateInputType
@@ -1288,15 +1252,12 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UserCountAggregateInputType | true
-    _avg?: UserAvgAggregateInputType
-    _sum?: UserSumAggregateInputType
     _min?: UserMinAggregateInputType
     _max?: UserMaxAggregateInputType
   }
 
   export type UserGroupByOutputType = {
-    id: number
-    uuid: string
+    id: string
     email: string
     phone: string | null
     password: string
@@ -1304,8 +1265,6 @@ export namespace Prisma {
     created_at: Date
     updated_at: Date
     _count: UserCountAggregateOutputType | null
-    _avg: UserAvgAggregateOutputType | null
-    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
   }
@@ -1326,7 +1285,6 @@ export namespace Prisma {
 
   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    uuid?: boolean
     email?: boolean
     phone?: boolean
     password?: boolean
@@ -1339,7 +1297,6 @@ export namespace Prisma {
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    uuid?: boolean
     email?: boolean
     phone?: boolean
     password?: boolean
@@ -1350,7 +1307,6 @@ export namespace Prisma {
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    uuid?: boolean
     email?: boolean
     phone?: boolean
     password?: boolean
@@ -1361,7 +1317,6 @@ export namespace Prisma {
 
   export type UserSelectScalar = {
     id?: boolean
-    uuid?: boolean
     email?: boolean
     phone?: boolean
     password?: boolean
@@ -1370,7 +1325,7 @@ export namespace Prisma {
     updated_at?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "uuid" | "email" | "phone" | "password" | "role" | "created_at" | "updated_at", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "phone" | "password" | "role" | "created_at" | "updated_at", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     password_reset_tokens?: boolean | User$password_reset_tokensArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1384,8 +1339,7 @@ export namespace Prisma {
       password_reset_tokens: Prisma.$PasswordResetTokenPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
-      uuid: string
+      id: string
       email: string
       phone: string | null
       password: string
@@ -1816,8 +1770,7 @@ export namespace Prisma {
    * Fields of the User model
    */
   interface UserFieldRefs {
-    readonly id: FieldRef<"User", 'Int'>
-    readonly uuid: FieldRef<"User", 'String'>
+    readonly id: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly phone: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
@@ -2260,22 +2213,12 @@ export namespace Prisma {
 
   export type AggregatePasswordResetToken = {
     _count: PasswordResetTokenCountAggregateOutputType | null
-    _avg: PasswordResetTokenAvgAggregateOutputType | null
-    _sum: PasswordResetTokenSumAggregateOutputType | null
     _min: PasswordResetTokenMinAggregateOutputType | null
     _max: PasswordResetTokenMaxAggregateOutputType | null
   }
 
-  export type PasswordResetTokenAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type PasswordResetTokenSumAggregateOutputType = {
-    id: number | null
-  }
-
   export type PasswordResetTokenMinAggregateOutputType = {
-    id: number | null
+    id: string | null
     token_hash: string | null
     user_uuid: string | null
     expires_at: Date | null
@@ -2284,7 +2227,7 @@ export namespace Prisma {
   }
 
   export type PasswordResetTokenMaxAggregateOutputType = {
-    id: number | null
+    id: string | null
     token_hash: string | null
     user_uuid: string | null
     expires_at: Date | null
@@ -2302,14 +2245,6 @@ export namespace Prisma {
     _all: number
   }
 
-
-  export type PasswordResetTokenAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type PasswordResetTokenSumAggregateInputType = {
-    id?: true
-  }
 
   export type PasswordResetTokenMinAggregateInputType = {
     id?: true
@@ -2377,18 +2312,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: PasswordResetTokenAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: PasswordResetTokenSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: PasswordResetTokenMinAggregateInputType
@@ -2419,22 +2342,18 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: PasswordResetTokenCountAggregateInputType | true
-    _avg?: PasswordResetTokenAvgAggregateInputType
-    _sum?: PasswordResetTokenSumAggregateInputType
     _min?: PasswordResetTokenMinAggregateInputType
     _max?: PasswordResetTokenMaxAggregateInputType
   }
 
   export type PasswordResetTokenGroupByOutputType = {
-    id: number
+    id: string
     token_hash: string
     user_uuid: string
     expires_at: Date
     used_at: Date | null
     created_at: Date
     _count: PasswordResetTokenCountAggregateOutputType | null
-    _avg: PasswordResetTokenAvgAggregateOutputType | null
-    _sum: PasswordResetTokenSumAggregateOutputType | null
     _min: PasswordResetTokenMinAggregateOutputType | null
     _max: PasswordResetTokenMaxAggregateOutputType | null
   }
@@ -2509,7 +2428,7 @@ export namespace Prisma {
       user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
+      id: string
       token_hash: string
       user_uuid: string
       expires_at: Date
@@ -2939,7 +2858,7 @@ export namespace Prisma {
    * Fields of the PasswordResetToken model
    */
   interface PasswordResetTokenFieldRefs {
-    readonly id: FieldRef<"PasswordResetToken", 'Int'>
+    readonly id: FieldRef<"PasswordResetToken", 'String'>
     readonly token_hash: FieldRef<"PasswordResetToken", 'String'>
     readonly user_uuid: FieldRef<"PasswordResetToken", 'String'>
     readonly expires_at: FieldRef<"PasswordResetToken", 'DateTime'>
@@ -3372,18 +3291,15 @@ export namespace Prisma {
   }
 
   export type DocumentAvgAggregateOutputType = {
-    id: number | null
     size: number | null
   }
 
   export type DocumentSumAggregateOutputType = {
-    id: number | null
     size: number | null
   }
 
   export type DocumentMinAggregateOutputType = {
-    id: number | null
-    uuid: string | null
+    id: string | null
     user_uuid: string | null
     filename: string | null
     mimetype: string | null
@@ -3395,8 +3311,7 @@ export namespace Prisma {
   }
 
   export type DocumentMaxAggregateOutputType = {
-    id: number | null
-    uuid: string | null
+    id: string | null
     user_uuid: string | null
     filename: string | null
     mimetype: string | null
@@ -3409,7 +3324,6 @@ export namespace Prisma {
 
   export type DocumentCountAggregateOutputType = {
     id: number
-    uuid: number
     user_uuid: number
     filename: number
     mimetype: number
@@ -3423,18 +3337,15 @@ export namespace Prisma {
 
 
   export type DocumentAvgAggregateInputType = {
-    id?: true
     size?: true
   }
 
   export type DocumentSumAggregateInputType = {
-    id?: true
     size?: true
   }
 
   export type DocumentMinAggregateInputType = {
     id?: true
-    uuid?: true
     user_uuid?: true
     filename?: true
     mimetype?: true
@@ -3447,7 +3358,6 @@ export namespace Prisma {
 
   export type DocumentMaxAggregateInputType = {
     id?: true
-    uuid?: true
     user_uuid?: true
     filename?: true
     mimetype?: true
@@ -3460,7 +3370,6 @@ export namespace Prisma {
 
   export type DocumentCountAggregateInputType = {
     id?: true
-    uuid?: true
     user_uuid?: true
     filename?: true
     mimetype?: true
@@ -3559,8 +3468,7 @@ export namespace Prisma {
   }
 
   export type DocumentGroupByOutputType = {
-    id: number
-    uuid: string
+    id: string
     user_uuid: string
     filename: string
     mimetype: string
@@ -3592,7 +3500,6 @@ export namespace Prisma {
 
   export type DocumentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    uuid?: boolean
     user_uuid?: boolean
     filename?: boolean
     mimetype?: boolean
@@ -3605,7 +3512,6 @@ export namespace Prisma {
 
   export type DocumentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    uuid?: boolean
     user_uuid?: boolean
     filename?: boolean
     mimetype?: boolean
@@ -3618,7 +3524,6 @@ export namespace Prisma {
 
   export type DocumentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    uuid?: boolean
     user_uuid?: boolean
     filename?: boolean
     mimetype?: boolean
@@ -3631,7 +3536,6 @@ export namespace Prisma {
 
   export type DocumentSelectScalar = {
     id?: boolean
-    uuid?: boolean
     user_uuid?: boolean
     filename?: boolean
     mimetype?: boolean
@@ -3642,14 +3546,13 @@ export namespace Prisma {
     created_at?: boolean
   }
 
-  export type DocumentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "uuid" | "user_uuid" | "filename" | "mimetype" | "size" | "url" | "path" | "type" | "created_at", ExtArgs["result"]["document"]>
+  export type DocumentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_uuid" | "filename" | "mimetype" | "size" | "url" | "path" | "type" | "created_at", ExtArgs["result"]["document"]>
 
   export type $DocumentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Document"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
-      id: number
-      uuid: string
+      id: string
       user_uuid: string
       filename: string
       mimetype: string
@@ -4081,8 +3984,7 @@ export namespace Prisma {
    * Fields of the Document model
    */
   interface DocumentFieldRefs {
-    readonly id: FieldRef<"Document", 'Int'>
-    readonly uuid: FieldRef<"Document", 'String'>
+    readonly id: FieldRef<"Document", 'String'>
     readonly user_uuid: FieldRef<"Document", 'String'>
     readonly filename: FieldRef<"Document", 'String'>
     readonly mimetype: FieldRef<"Document", 'String'>
@@ -4473,7 +4375,6 @@ export namespace Prisma {
 
   export const UserScalarFieldEnum: {
     id: 'id',
-    uuid: 'uuid',
     email: 'email',
     phone: 'phone',
     password: 'password',
@@ -4499,7 +4400,6 @@ export namespace Prisma {
 
   export const DocumentScalarFieldEnum: {
     id: 'id',
-    uuid: 'uuid',
     user_uuid: 'user_uuid',
     filename: 'filename',
     mimetype: 'mimetype',
@@ -4540,20 +4440,6 @@ export namespace Prisma {
   /**
    * Field references
    */
-
-
-  /**
-   * Reference to a field of type 'Int'
-   */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-  /**
-   * Reference to a field of type 'Int[]'
-   */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
 
 
   /**
@@ -4599,6 +4485,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
    * Reference to a field of type 'DocumentType'
    */
   export type EnumDocumentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DocumentType'>
@@ -4633,8 +4533,7 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    id?: IntFilter<"User"> | number
-    uuid?: StringFilter<"User"> | string
+    id?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
     phone?: StringNullableFilter<"User"> | string | null
     password?: StringFilter<"User"> | string
@@ -4646,7 +4545,6 @@ export namespace Prisma {
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
-    uuid?: SortOrder
     email?: SortOrder
     phone?: SortOrderInput | SortOrder
     password?: SortOrder
@@ -4657,8 +4555,7 @@ export namespace Prisma {
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
-    uuid?: string
+    id?: string
     email?: string
     phone?: string
     AND?: UserWhereInput | UserWhereInput[]
@@ -4669,11 +4566,10 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"User"> | Date | string
     updated_at?: DateTimeFilter<"User"> | Date | string
     password_reset_tokens?: PasswordResetTokenListRelationFilter
-  }, "id" | "uuid" | "email" | "phone">
+  }, "id" | "email" | "phone">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
-    uuid?: SortOrder
     email?: SortOrder
     phone?: SortOrderInput | SortOrder
     password?: SortOrder
@@ -4681,18 +4577,15 @@ export namespace Prisma {
     created_at?: SortOrder
     updated_at?: SortOrder
     _count?: UserCountOrderByAggregateInput
-    _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
-    _sum?: UserSumOrderByAggregateInput
   }
 
   export type UserScalarWhereWithAggregatesInput = {
     AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     OR?: UserScalarWhereWithAggregatesInput[]
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"User"> | number
-    uuid?: StringWithAggregatesFilter<"User"> | string
+    id?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
     phone?: StringNullableWithAggregatesFilter<"User"> | string | null
     password?: StringWithAggregatesFilter<"User"> | string
@@ -4705,7 +4598,7 @@ export namespace Prisma {
     AND?: PasswordResetTokenWhereInput | PasswordResetTokenWhereInput[]
     OR?: PasswordResetTokenWhereInput[]
     NOT?: PasswordResetTokenWhereInput | PasswordResetTokenWhereInput[]
-    id?: IntFilter<"PasswordResetToken"> | number
+    id?: StringFilter<"PasswordResetToken"> | string
     token_hash?: StringFilter<"PasswordResetToken"> | string
     user_uuid?: StringFilter<"PasswordResetToken"> | string
     expires_at?: DateTimeFilter<"PasswordResetToken"> | Date | string
@@ -4725,7 +4618,7 @@ export namespace Prisma {
   }
 
   export type PasswordResetTokenWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
+    id?: string
     token_hash?: string
     AND?: PasswordResetTokenWhereInput | PasswordResetTokenWhereInput[]
     OR?: PasswordResetTokenWhereInput[]
@@ -4745,17 +4638,15 @@ export namespace Prisma {
     used_at?: SortOrderInput | SortOrder
     created_at?: SortOrder
     _count?: PasswordResetTokenCountOrderByAggregateInput
-    _avg?: PasswordResetTokenAvgOrderByAggregateInput
     _max?: PasswordResetTokenMaxOrderByAggregateInput
     _min?: PasswordResetTokenMinOrderByAggregateInput
-    _sum?: PasswordResetTokenSumOrderByAggregateInput
   }
 
   export type PasswordResetTokenScalarWhereWithAggregatesInput = {
     AND?: PasswordResetTokenScalarWhereWithAggregatesInput | PasswordResetTokenScalarWhereWithAggregatesInput[]
     OR?: PasswordResetTokenScalarWhereWithAggregatesInput[]
     NOT?: PasswordResetTokenScalarWhereWithAggregatesInput | PasswordResetTokenScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"PasswordResetToken"> | number
+    id?: StringWithAggregatesFilter<"PasswordResetToken"> | string
     token_hash?: StringWithAggregatesFilter<"PasswordResetToken"> | string
     user_uuid?: StringWithAggregatesFilter<"PasswordResetToken"> | string
     expires_at?: DateTimeWithAggregatesFilter<"PasswordResetToken"> | Date | string
@@ -4767,8 +4658,7 @@ export namespace Prisma {
     AND?: DocumentWhereInput | DocumentWhereInput[]
     OR?: DocumentWhereInput[]
     NOT?: DocumentWhereInput | DocumentWhereInput[]
-    id?: IntFilter<"Document"> | number
-    uuid?: StringFilter<"Document"> | string
+    id?: StringFilter<"Document"> | string
     user_uuid?: StringFilter<"Document"> | string
     filename?: StringFilter<"Document"> | string
     mimetype?: StringFilter<"Document"> | string
@@ -4781,7 +4671,6 @@ export namespace Prisma {
 
   export type DocumentOrderByWithRelationInput = {
     id?: SortOrder
-    uuid?: SortOrder
     user_uuid?: SortOrder
     filename?: SortOrder
     mimetype?: SortOrder
@@ -4793,8 +4682,7 @@ export namespace Prisma {
   }
 
   export type DocumentWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
-    uuid?: string
+    id?: string
     AND?: DocumentWhereInput | DocumentWhereInput[]
     OR?: DocumentWhereInput[]
     NOT?: DocumentWhereInput | DocumentWhereInput[]
@@ -4806,11 +4694,10 @@ export namespace Prisma {
     path?: StringFilter<"Document"> | string
     type?: EnumDocumentTypeFilter<"Document"> | $Enums.DocumentType
     created_at?: DateTimeFilter<"Document"> | Date | string
-  }, "id" | "uuid">
+  }, "id">
 
   export type DocumentOrderByWithAggregationInput = {
     id?: SortOrder
-    uuid?: SortOrder
     user_uuid?: SortOrder
     filename?: SortOrder
     mimetype?: SortOrder
@@ -4830,8 +4717,7 @@ export namespace Prisma {
     AND?: DocumentScalarWhereWithAggregatesInput | DocumentScalarWhereWithAggregatesInput[]
     OR?: DocumentScalarWhereWithAggregatesInput[]
     NOT?: DocumentScalarWhereWithAggregatesInput | DocumentScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Document"> | number
-    uuid?: StringWithAggregatesFilter<"Document"> | string
+    id?: StringWithAggregatesFilter<"Document"> | string
     user_uuid?: StringWithAggregatesFilter<"Document"> | string
     filename?: StringWithAggregatesFilter<"Document"> | string
     mimetype?: StringWithAggregatesFilter<"Document"> | string
@@ -4843,7 +4729,7 @@ export namespace Prisma {
   }
 
   export type UserCreateInput = {
-    uuid?: string
+    id?: string
     email: string
     phone?: string | null
     password: string
@@ -4854,8 +4740,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateInput = {
-    id?: number
-    uuid?: string
+    id?: string
     email: string
     phone?: string | null
     password: string
@@ -4866,7 +4751,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateInput = {
-    uuid?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
@@ -4877,8 +4762,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    uuid?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
@@ -4889,8 +4773,7 @@ export namespace Prisma {
   }
 
   export type UserCreateManyInput = {
-    id?: number
-    uuid?: string
+    id?: string
     email: string
     phone?: string | null
     password: string
@@ -4900,7 +4783,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateManyMutationInput = {
-    uuid?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
@@ -4910,8 +4793,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    uuid?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
@@ -4921,6 +4803,7 @@ export namespace Prisma {
   }
 
   export type PasswordResetTokenCreateInput = {
+    id?: string
     token_hash: string
     expires_at: Date | string
     used_at?: Date | string | null
@@ -4929,7 +4812,7 @@ export namespace Prisma {
   }
 
   export type PasswordResetTokenUncheckedCreateInput = {
-    id?: number
+    id?: string
     token_hash: string
     user_uuid: string
     expires_at: Date | string
@@ -4938,6 +4821,7 @@ export namespace Prisma {
   }
 
   export type PasswordResetTokenUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     token_hash?: StringFieldUpdateOperationsInput | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4946,7 +4830,7 @@ export namespace Prisma {
   }
 
   export type PasswordResetTokenUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     token_hash?: StringFieldUpdateOperationsInput | string
     user_uuid?: StringFieldUpdateOperationsInput | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4955,7 +4839,7 @@ export namespace Prisma {
   }
 
   export type PasswordResetTokenCreateManyInput = {
-    id?: number
+    id?: string
     token_hash: string
     user_uuid: string
     expires_at: Date | string
@@ -4964,6 +4848,7 @@ export namespace Prisma {
   }
 
   export type PasswordResetTokenUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
     token_hash?: StringFieldUpdateOperationsInput | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4971,7 +4856,7 @@ export namespace Prisma {
   }
 
   export type PasswordResetTokenUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     token_hash?: StringFieldUpdateOperationsInput | string
     user_uuid?: StringFieldUpdateOperationsInput | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4980,7 +4865,7 @@ export namespace Prisma {
   }
 
   export type DocumentCreateInput = {
-    uuid?: string
+    id?: string
     user_uuid: string
     filename: string
     mimetype: string
@@ -4992,8 +4877,7 @@ export namespace Prisma {
   }
 
   export type DocumentUncheckedCreateInput = {
-    id?: number
-    uuid?: string
+    id?: string
     user_uuid: string
     filename: string
     mimetype: string
@@ -5005,7 +4889,7 @@ export namespace Prisma {
   }
 
   export type DocumentUpdateInput = {
-    uuid?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
     user_uuid?: StringFieldUpdateOperationsInput | string
     filename?: StringFieldUpdateOperationsInput | string
     mimetype?: StringFieldUpdateOperationsInput | string
@@ -5017,8 +4901,7 @@ export namespace Prisma {
   }
 
   export type DocumentUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    uuid?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
     user_uuid?: StringFieldUpdateOperationsInput | string
     filename?: StringFieldUpdateOperationsInput | string
     mimetype?: StringFieldUpdateOperationsInput | string
@@ -5030,8 +4913,7 @@ export namespace Prisma {
   }
 
   export type DocumentCreateManyInput = {
-    id?: number
-    uuid?: string
+    id?: string
     user_uuid: string
     filename: string
     mimetype: string
@@ -5043,7 +4925,7 @@ export namespace Prisma {
   }
 
   export type DocumentUpdateManyMutationInput = {
-    uuid?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
     user_uuid?: StringFieldUpdateOperationsInput | string
     filename?: StringFieldUpdateOperationsInput | string
     mimetype?: StringFieldUpdateOperationsInput | string
@@ -5055,8 +4937,7 @@ export namespace Prisma {
   }
 
   export type DocumentUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    uuid?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
     user_uuid?: StringFieldUpdateOperationsInput | string
     filename?: StringFieldUpdateOperationsInput | string
     mimetype?: StringFieldUpdateOperationsInput | string
@@ -5065,17 +4946,6 @@ export namespace Prisma {
     path?: StringFieldUpdateOperationsInput | string
     type?: EnumDocumentTypeFieldUpdateOperationsInput | $Enums.DocumentType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -5143,7 +5013,6 @@ export namespace Prisma {
 
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
-    uuid?: SortOrder
     email?: SortOrder
     phone?: SortOrder
     password?: SortOrder
@@ -5152,13 +5021,8 @@ export namespace Prisma {
     updated_at?: SortOrder
   }
 
-  export type UserAvgOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
-    uuid?: SortOrder
     email?: SortOrder
     phone?: SortOrder
     password?: SortOrder
@@ -5169,33 +5033,12 @@ export namespace Prisma {
 
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
-    uuid?: SortOrder
     email?: SortOrder
     phone?: SortOrder
     password?: SortOrder
     role?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
-  }
-
-  export type UserSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -5283,10 +5126,6 @@ export namespace Prisma {
     created_at?: SortOrder
   }
 
-  export type PasswordResetTokenAvgOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
   export type PasswordResetTokenMaxOrderByAggregateInput = {
     id?: SortOrder
     token_hash?: SortOrder
@@ -5305,10 +5144,6 @@ export namespace Prisma {
     created_at?: SortOrder
   }
 
-  export type PasswordResetTokenSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -5323,6 +5158,17 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type EnumDocumentTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.DocumentType | EnumDocumentTypeFieldRefInput<$PrismaModel>
     in?: $Enums.DocumentType[] | ListEnumDocumentTypeFieldRefInput<$PrismaModel>
@@ -5332,7 +5178,6 @@ export namespace Prisma {
 
   export type DocumentCountOrderByAggregateInput = {
     id?: SortOrder
-    uuid?: SortOrder
     user_uuid?: SortOrder
     filename?: SortOrder
     mimetype?: SortOrder
@@ -5344,13 +5189,11 @@ export namespace Prisma {
   }
 
   export type DocumentAvgOrderByAggregateInput = {
-    id?: SortOrder
     size?: SortOrder
   }
 
   export type DocumentMaxOrderByAggregateInput = {
     id?: SortOrder
-    uuid?: SortOrder
     user_uuid?: SortOrder
     filename?: SortOrder
     mimetype?: SortOrder
@@ -5363,7 +5206,6 @@ export namespace Prisma {
 
   export type DocumentMinOrderByAggregateInput = {
     id?: SortOrder
-    uuid?: SortOrder
     user_uuid?: SortOrder
     filename?: SortOrder
     mimetype?: SortOrder
@@ -5375,8 +5217,23 @@ export namespace Prisma {
   }
 
   export type DocumentSumOrderByAggregateInput = {
-    id?: SortOrder
     size?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type EnumDocumentTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -5433,14 +5290,6 @@ export namespace Prisma {
     deleteMany?: PasswordResetTokenScalarWhereInput | PasswordResetTokenScalarWhereInput[]
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
   export type PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<PasswordResetTokenCreateWithoutUserInput, PasswordResetTokenUncheckedCreateWithoutUserInput> | PasswordResetTokenCreateWithoutUserInput[] | PasswordResetTokenUncheckedCreateWithoutUserInput[]
     connectOrCreate?: PasswordResetTokenCreateOrConnectWithoutUserInput | PasswordResetTokenCreateOrConnectWithoutUserInput[]
@@ -5473,19 +5322,16 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPassword_reset_tokensInput, UserUpdateWithoutPassword_reset_tokensInput>, UserUncheckedUpdateWithoutPassword_reset_tokensInput>
   }
 
-  export type EnumDocumentTypeFieldUpdateOperationsInput = {
-    set?: $Enums.DocumentType
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
+  export type EnumDocumentTypeFieldUpdateOperationsInput = {
+    set?: $Enums.DocumentType
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -5534,33 +5380,6 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -5576,6 +5395,17 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -5662,6 +5492,33 @@ export namespace Prisma {
     not?: NestedEnumDocumentTypeFilter<$PrismaModel> | $Enums.DocumentType
   }
 
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type NestedEnumDocumentTypeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.DocumentType | EnumDocumentTypeFieldRefInput<$PrismaModel>
     in?: $Enums.DocumentType[] | ListEnumDocumentTypeFieldRefInput<$PrismaModel>
@@ -5673,6 +5530,7 @@ export namespace Prisma {
   }
 
   export type PasswordResetTokenCreateWithoutUserInput = {
+    id?: string
     token_hash: string
     expires_at: Date | string
     used_at?: Date | string | null
@@ -5680,7 +5538,7 @@ export namespace Prisma {
   }
 
   export type PasswordResetTokenUncheckedCreateWithoutUserInput = {
-    id?: number
+    id?: string
     token_hash: string
     expires_at: Date | string
     used_at?: Date | string | null
@@ -5717,7 +5575,7 @@ export namespace Prisma {
     AND?: PasswordResetTokenScalarWhereInput | PasswordResetTokenScalarWhereInput[]
     OR?: PasswordResetTokenScalarWhereInput[]
     NOT?: PasswordResetTokenScalarWhereInput | PasswordResetTokenScalarWhereInput[]
-    id?: IntFilter<"PasswordResetToken"> | number
+    id?: StringFilter<"PasswordResetToken"> | string
     token_hash?: StringFilter<"PasswordResetToken"> | string
     user_uuid?: StringFilter<"PasswordResetToken"> | string
     expires_at?: DateTimeFilter<"PasswordResetToken"> | Date | string
@@ -5726,7 +5584,7 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutPassword_reset_tokensInput = {
-    uuid?: string
+    id?: string
     email: string
     phone?: string | null
     password: string
@@ -5736,8 +5594,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateWithoutPassword_reset_tokensInput = {
-    id?: number
-    uuid?: string
+    id?: string
     email: string
     phone?: string | null
     password: string
@@ -5763,7 +5620,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutPassword_reset_tokensInput = {
-    uuid?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
@@ -5773,8 +5630,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateWithoutPassword_reset_tokensInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    uuid?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
@@ -5784,7 +5640,7 @@ export namespace Prisma {
   }
 
   export type PasswordResetTokenCreateManyUserInput = {
-    id?: number
+    id?: string
     token_hash: string
     expires_at: Date | string
     used_at?: Date | string | null
@@ -5792,6 +5648,7 @@ export namespace Prisma {
   }
 
   export type PasswordResetTokenUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
     token_hash?: StringFieldUpdateOperationsInput | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5799,7 +5656,7 @@ export namespace Prisma {
   }
 
   export type PasswordResetTokenUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     token_hash?: StringFieldUpdateOperationsInput | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5807,7 +5664,7 @@ export namespace Prisma {
   }
 
   export type PasswordResetTokenUncheckedUpdateManyWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     token_hash?: StringFieldUpdateOperationsInput | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

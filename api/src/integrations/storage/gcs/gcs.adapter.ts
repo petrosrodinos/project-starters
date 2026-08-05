@@ -10,17 +10,15 @@ import {
     DownloadImageResponse
 } from './interfaces/gcs.interfaces';
 import { GcsConfig } from './config/gcs.config';
+import { DEFAULT_GCS_FOLDER } from './config/gcs-folders.config';
 
 @Injectable()
 export class GcsAdapter {
     private readonly logger = new Logger(GcsAdapter.name);
-    private folder: string;
 
     constructor(
         private gcsConfig: GcsConfig,
-    ) {
-        this.folder = this.gcsConfig.getConfig().folder_name;
-    }
+    ) {}
 
     public async uploadImage(request: UploadImageRequest): Promise<UploadImageResponse> {
         try {
@@ -29,7 +27,7 @@ export class GcsAdapter {
             const bucketName = request.bucket || this.gcsConfig.getBucketName();
             const bucket = storage.bucket(bucketName);
 
-            const folder = request.folder || this.folder;
+            const folder = request.folder || DEFAULT_GCS_FOLDER;
             const filename = `${folder}/${Date.now()}-${request.filename}`;
 
             const file = bucket.file(filename);
@@ -103,7 +101,7 @@ export class GcsAdapter {
             const bucketName = this.gcsConfig.getBucketName();
             const bucket = storage.bucket(bucketName);
 
-            const folder = request.folder || this.folder;
+            const folder = request.folder || DEFAULT_GCS_FOLDER;
             const prefix = request.prefix ? `${folder}/${request.prefix}` : `${folder}/`;
             const maxResults = request.maxResults || 100;
 
@@ -143,7 +141,7 @@ export class GcsAdapter {
             const bucketName = this.gcsConfig.getBucketName();
             const bucket = storage.bucket(bucketName);
 
-            const folderPath = folder || this.folder;
+            const folderPath = folder || DEFAULT_GCS_FOLDER;
             const fullPath = `${folderPath}/${filename}`;
 
             const file = bucket.file(fullPath);

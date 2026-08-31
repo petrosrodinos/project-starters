@@ -1,8 +1,11 @@
+import { parseCorsUrls } from '../cors';
+
 export default () => ({
     NODE_ENV: process.env.NODE_ENV,
     PORT: Number(process.env.PORT),
     APP_URL: process.env.APP_URL,
     LANDING_URL: process.env.LANDING_URL,
+    CORS_URLS: parseCorsUrls(process.env.CORS_URLS),
     API_URL: process.env.API_URL,
     DATABASE_URL: process.env.DATABASE_URL,
     REDIS_URL: process.env.REDIS_URL,

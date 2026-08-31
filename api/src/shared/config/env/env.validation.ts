@@ -1,10 +1,15 @@
 import { z } from 'zod';
+import { parseCorsUrls } from '../cors';
 
 const EnvSchema = z.object({
     NODE_ENV: z.enum(['local', 'development', 'test', 'staging', 'production']),
     PORT: z.coerce.number().default(3000),
     APP_URL: z.string().url().optional(),
     LANDING_URL: z.string().url().optional(),
+    CORS_URLS: z.preprocess(
+        parseCorsUrls,
+        z.array(z.string().url()).optional(),
+    ),
     API_URL: z.string().url().optional(),
     DATABASE_URL: z.string().url(),
     REDIS_URL: z.string().optional(),

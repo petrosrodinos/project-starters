@@ -396,6 +396,18 @@ Rules:
 </Table>
 ```
 
+### Dropdowns — HeroUI only (never plain HTML)
+
+Every dropdown, select, or menu **must** use the shared HeroUI v3 components. **Never** render a plain HTML `<select>` / `<option>` / `<datalist>`, or hand-roll a dropdown from `<div>`/`<ul>` + state.
+
+| Need                                   | Use                                                  |
+| -------------------------------------- | ---------------------------------------------------- |
+| Pick one/many values (form, filter)    | HeroUI `Select` + `ListBox`                          |
+| Searchable / type-ahead pick           | HeroUI `ComboBox` or `Autocomplete`                  |
+| Action menu (row actions, kebab, user) | HeroUI `Dropdown`                                    |
+
+Before writing a dropdown, check `components/ui/` for an existing shared wrapper and reuse it. Read the HeroUI docs (`.heroui-docs/react/components/(pickers)/select.mdx`, `(collections)/dropdown.mdx`) first — do not rely on memory of the API.
+
 ### HeroUI v3 — Select (accessible name required)
 
 Every `Select` needs an accessible name. React Aria will throw if neither `aria-label` nor an associated label is present.
@@ -535,6 +547,7 @@ When adding a new route, **always add it to `routes.ts` first**, then reference 
 | Use `useOverlayState` + `ConfirmationDialog` for destructive UX | Build a custom confirm modal per page                 |
 | Nest `Modal.Container` inside `Modal.Backdrop`                 | Use sibling `Backdrop` + `Container` under `Modal`   |
 | Use `Table.ScrollContainer` → `Table.Content` for tables       | Put `Table.Column` directly under `<Table>`          |
+| Use HeroUI `Select` / `ComboBox` / `Autocomplete` / `Dropdown` for every dropdown | Use plain HTML `<select>`/`<option>` or a hand-rolled dropdown |
 | Put `<Label>` inside `<Select>` or use `aria-label`            | Leave `Select` unlabeled or label as sibling only    |
 | Put static select/filter options in `config/constants/dropdowns/` | Define option arrays inline in pages or form components |
 | Put static labels/descriptions/getters in `config/constants/dropdowns/` | Add `*-label.utils.ts` / `*-description.utils.ts` under `features/**/utils/` |

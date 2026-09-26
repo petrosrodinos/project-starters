@@ -2,12 +2,12 @@ import { EmailTemplates } from '@/integrations/notifications/resend/interfaces/m
 
 export const EmailConfig = {
     email_addresses: {
-        verification: 'sentify@logiqdev.com',
-        alert: 'sentify@logiqdev.com',
+        verification: 'info@logiqdev.com',
+        alert: 'info@logiqdev.com',
     },
     templates: {
         waitlist: {
-            subject: 'Sentify - Waitlist',
+            subject: 'Project - Waitlist',
             template_id: EmailTemplates.WAITLIST,
         },
         password_reset: {
